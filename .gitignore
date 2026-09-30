@@ -6,7 +6,6 @@ node_modules/
 
 # Estado e cache do Terraform (nunca versionar)
 .terraform/
-.terraform.lock.hcl
 *.tfstate
 *.tfstate.backup
 *.tfstate.*.backup
@@ -15,9 +14,6 @@ crash.log
 # Credenciais AWS (nunca versionar)
 credentials
 .aws/
-
-# Backend Terraform com valores reais de conta
-infra/backend/backend.hcl
 
 # Sistema operacional
 .DS_Store
