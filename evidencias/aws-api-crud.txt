@@ -1,0 +1,18 @@
+Validação da API TechNova Reservations na AWS
+
+Infraestrutura:
+- EC2: 3.84.149.248
+- API: Docker na EC2
+- Banco: PostgreSQL RDS privado
+- Região: us-east-1
+
+Testes realizados:
+- GET /health -> 200 {"status":"ok"}
+- POST /reservas -> 201, reserva criada com id 1
+- GET /reservas -> 200, reserva recuperada
+- GET /reservas/1 -> 200, reserva recuperada por ID
+- PUT /reservas/1 -> 200, status alterado para confirmada
+- DELETE /reservas/1 -> 204 No Content
+
+Resultado:
+CRUD completo validado com a API executando na EC2 e persistência no PostgreSQL RDS.
