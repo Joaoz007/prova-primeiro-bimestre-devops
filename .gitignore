@@ -27,3 +27,5 @@ tfplan
 *.tfvars
 *.tfvars.json
 
+# Chaves SSH
+*.pem

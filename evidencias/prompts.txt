@@ -1,0 +1,785 @@
+Você é meu copiloto de desenvolvimento para a Prova do Primeiro Bimestre — DevOps 2026.2.
+
+Siga rigorosamente o enunciado da prova que forneci nesta conversa. O projeto é a API de Reservas da TechNova, e a estrutura final deve seguir o modelo exigido pelo professor.
+
+OBJETIVO
+Construir, de forma incremental e validada, o repositório:
+
+prova-primeiro-bimestre-devops
+
+A solução deve conter:
+
+API Node.js + Express
+
+PostgreSQL
+
+CRUD completo de /reservas
+
+/health
+
+Dockerfile
+
+Docker Compose
+
+Terraform modularizado
+
+VPC
+
+Security Groups
+
+EC2
+
+RDS PostgreSQL
+
+Remote State com S3 + DynamoDB
+
+módulos Terraform vpc, security-group, ec2 e rds
+
+AWS Academy Learner Lab
+
+LabRole / LabInstanceProfile
+
+README
+
+evidências
+
+relatorio.md
+
+REGRAS OBRIGATÓRIAS
+Siga o enunciado da prova como requisito principal.
+
+Não invente requisitos que não foram solicitados.
+
+Não crie IAM users, groups ou roles próprios.
+
+AWS sempre em us-east-1.
+
+Para EC2, utilize LabInstanceProfile quando for necessário instance profile.
+
+Para permissões de serviços, utilize LabRole.
+
+RDS deve ser PostgreSQL, db.t3.micro, privado, criptografado e nas subnets privadas.
+
+RDS deve aceitar PostgreSQL 5432 somente do Security Group da EC2.
+
+EC2 deve ser t2.micro em subnet pública.
+
+A API deve gravar e ler reservas no PostgreSQL real. Não utilizar armazenamento em memória.
+
+Docker Compose deve subir API + PostgreSQL.
+
+Compose deve possuir volume nomeado, rede bridge customizada, healthcheck e depends_on com condição.
+
+.env nunca deve ser versionado.
+
+.tfstate, .terraform/ e credenciais nunca devem ser versionados.
+
+Não criar recursos AWS desnecessários.
+
+Priorize soluções simples, compatíveis com AWS Academy Learner Lab e fáceis de explicar na apresentação.
+
+Não execute terraform apply ou terraform destroy sem minha confirmação explícita.
+
+Nunca considere uma etapa concluída apenas porque o código parece correto. A conclusão depende da validação.
+
+Não gere grandes quantidades de código antecipadamente.
+
+Trabalhe em pequenas etapas para economizar tokens.
+
+ESTRUTURA OBRIGATÓRIA
+A estrutura final deve ser:
+
+prova-primeiro-bimestre-devops/
+
+├── README.md
+
+├── .gitignore
+
+├── app/
+
+│ ├── src/
+
+│ ├── package.json
+
+│ ├── Dockerfile
+
+│ └── .dockerignore
+
+├── docker-compose.yml
+
+├── .env.example
+
+├── infra/
+
+│ ├── modules/
+
+│ │ ├── vpc/
+
+│ │ ├── security-group/
+
+│ │ ├── ec2/
+
+│ │ └── rds/
+
+│ ├── main.tf
+
+│ ├── variables.tf
+
+│ ├── outputs.tf
+
+│ ├── providers.tf
+
+│ └── backend/
+
+├── evidencias/
+
+│ ├── docker-build.txt
+
+│ ├── compose-ps.txt
+
+│ └── terraform-plan.txt
+
+└── relatorio.md
+
+API
+O recurso reservas possui:
+
+id
+
+cliente
+
+data
+
+status
+
+Rotas obrigatórias:
+
+POST /reservas
+
+GET /reservas
+
+GET /reservas/:id
+
+PUT /reservas/:id
+
+DELETE /reservas/:id
+
+GET /health
+
+Todas as operações CRUD devem utilizar PostgreSQL.
+
+MÉTODO DE TRABALHO
+Não tente construir o projeto inteiro de uma vez.
+
+Trabalhe nesta ordem:
+
+FASE 1 — Planejamento e estrutura
+
+FASE 2 — Git inicial
+
+FASE 3 — API + PostgreSQL
+
+FASE 4 — Dockerfile
+
+FASE 5 — Docker Compose
+
+FASE 6 — Terraform base
+
+FASE 7 — Remote State
+
+FASE 8 — módulos Terraform
+
+FASE 9 — composição AWS
+
+FASE 10 — validação
+
+FASE 11 — evidências
+
+FASE 12 — README e relatório
+
+FASE 13 — revisão final
+
+Em cada fase:
+
+Explique brevemente o objetivo.
+
+Liste os arquivos que serão criados ou alterados.
+
+Gere somente o código necessário para aquela fase.
+
+Informe exatamente onde cada arquivo deve ficar.
+
+Aguarde minha confirmação antes de avançar.
+
+Se houver erro, analise o erro antes de propor alteração.
+
+Não reescreva arquivos que não precisam ser modificados.
+
+GIT
+O histórico precisa conter pelo menos 6 commits usando Conventional Commits.
+
+Utilize, quando fizer sentido:
+
+feat:
+
+fix:
+
+docs:
+
+chore:
+
+Também precisamos demonstrar uso de feature branch + merge.
+
+Não crie commits automaticamente sem minha autorização.
+
+IA COMO COPILOTO
+Durante o desenvolvimento, explique resumidamente decisões importantes para que eu consiga posteriormente escrever o relatorio.md.
+
+Quando uma solução tiver mais de uma possibilidade, apresente no máximo 2 opções e indique apenas as diferenças técnicas, sem gerar código desnecessário.
+
+IMPORTANTE SOBRE TOKENS
+O limite gratuito do Kiro é limitado.
+
+Portanto:
+
+seja econômico;
+
+não repita o enunciado;
+
+não gere explicações longas;
+
+não gere arquivos futuros antecipadamente;
+
+não gere código que ainda não será utilizado;
+
+responda somente à etapa atual;
+
+prefira alterações pequenas;
+
+reutilize arquivos existentes;
+
+antes de gerar código, verifique se ele realmente é necessário.
+
+PRIMEIRA AÇÃO
+Não gere código ainda.
+
+Primeiro faça somente:
+
+uma análise resumida dos requisitos;
+
+a estrutura final de diretórios;
+
+o plano das 13 fases;
+
+os riscos técnicos que devemos evitar.
+
+Depois pare e aguarde minha confirmação.
+
+
+
+RDS não precisa ser Multi-AZ. O DB Subnet Group deve usar subnets privadas em pelo menos 2 AZs, conforme o enunciado. A instância RDS deve ser db.t3.micro e não deve adicionar recursos ou configurações não exigidos.
+
+
+
+Create the design for technova-reservas-api
+
+
+
+Create the requirements and then the design and then the tasks for technova-reservas-api
+
+
+
+Pode iniciar a implementação da Fase 1 da tasks.md.
+
+Siga exatamente os requisitos e o design já aprovados.
+
+Regras:
+
+Execute somente as tarefas da Fase 1.
+
+Não avance para a Fase 2.
+
+Não faça commit automaticamente.
+
+Não execute Docker, Terraform ou AWS nesta etapa.
+
+Não implemente tarefas opcionais de fast-check.
+
+Não altere requirements.md, design.md ou tasks.md.
+
+Não crie funcionalidades que não estejam previstas na spec.
+
+Ao finalizar, informe apenas os arquivos criados/alterados e o resultado da validação da Fase 1.
+
+Aguarde minha confirmação antes de continuar.
+
+
+
+Pode iniciar a Fase 2 — Git inicial da tasks.md.
+
+Nesta fase faça somente:
+
+Verifique o estado atual do Git no repositório.
+
+Verifique se o repositório já possui origin configurado.
+
+Verifique se já existe algum commit.
+
+Prepare somente os arquivos da Fase 1 para o primeiro commit.
+
+O primeiro commit deve usar Conventional Commits, preferencialmente:
+
+chore: inicializa estrutura do projeto
+
+Não crie nem altere código da aplicação.
+
+Não crie Dockerfile.
+
+Não crie Docker Compose.
+
+Não crie Terraform.
+
+Não execute comandos AWS.
+
+Não faça push.
+
+Não crie ou faça merge de branches automaticamente.
+
+Não faça nenhum commit sem minha confirmação explícita.
+
+Ao terminar, mostre:
+
+git status
+
+branch atual
+
+commits existentes
+
+arquivos que seriam incluídos no primeiro commit
+
+comandos exatos que devo executar para realizar o primeiro commit.
+
+Depois pare e aguarde.
+
+
+
+Pode iniciar a Fase 3 — implementação da API local.
+
+Faça somente as tasks da tasks.md relacionadas à estrutura/base da API e banco local:
+
+
+package.json
+
+
+index.js
+
+
+db.js
+
+
+reservas.js
+
+
+health.js
+
+criação da tabela reservas conforme o design.md
+
+conexão PostgreSQL usando variáveis de ambiente
+
+CRUD completo:
+
+POST /reservas
+
+GET /reservas
+
+GET /reservas/:id
+
+PUT /reservas/:id
+
+DELETE /reservas/:id
+
+GET /health
+
+validações e códigos HTTP conforme requirements.md e design.md
+
+tratamento de erros sem expor detalhes internos
+
+Regras:
+
+Não faça Dockerfile.
+
+Não faça docker-compose.
+
+Não faça Terraform.
+
+Não faça AWS.
+
+Não faça terraform apply ou destroy.
+
+Não faça commit.
+
+Não faça push.
+
+Não implemente os testes property-based com fast-check ainda.
+
+Não altere os arquivos da especificação .kiro/specs/.
+
+Ao terminar, mostre os arquivos criados/alterados e o conteúdo ou resumo das decisões importantes.
+
+Execute apenas validações locais que não dependam de Docker/AWS.
+
+Pare ao finalizar esta fase.
+
+
+
+Antes de avançar para a Fase 4, faça somente uma revisão da Fase 3.
+
+Não altere nenhum arquivo e não faça commit.
+
+Mostre o conteúdo completo destes 5 arquivos:
+
+app/package.json
+
+app/src/db.js
+
+app/src/index.js
+
+app/src/routes/reservas.js
+
+app/src/routes/health.js
+
+Depois faça um checklist objetivo comparando a implementação com requirements.md e design.md, verificando:
+
+campos e tipos da tabela reservas
+
+SQL parametrizado
+
+POST e validação
+
+GET lista
+
+GET por ID
+
+PUT e atualização parcial
+
+DELETE
+
+/health
+
+códigos HTTP esperados
+
+tratamento de erros
+
+variáveis de ambiente
+
+inicialização do banco antes do servidor
+
+Não corrija nada nesta etapa.
+
+Pare depois de mostrar o código e o checklist.
+
+
+
+Faça somente uma correção na Fase 3.
+
+No arquivo 
+reservas.js
+, corrija dataValida() para rejeitar datas de calendário impossíveis, como:
+
+2026-02-31
+
+2026-04-31
+
+2026-13-01
+
+2026-00-10
+
+E aceitar datas válidas, incluindo anos bissextos quando aplicável.
+
+Mantenha o formato obrigatório YYYY-MM-DD.
+
+Não altere nenhuma outra regra da API.
+
+Não faça Docker.
+
+Não faça Compose.
+
+Não faça Terraform.
+
+Não faça AWS.
+
+Não faça commit.
+
+Não faça push.
+
+Depois:
+
+mostre somente a nova implementação de dataValida();
+
+execute uma validação local simples com exemplos válidos e inválidos;
+
+mostre o resultado;
+
+pare.
+
+
+
+Pode iniciar somente a Fase 4 — Dockerfile.
+
+Implemente apenas:
+
+app/Dockerfile
+
+app/.dockerignore
+
+Siga exatamente o design.md e requirements.md.
+
+Requisitos:
+
+imagem base Node conforme definido no design;
+
+instalação das dependências de produção;
+
+aplicação executada como usuário não-root;
+
+porta 3000;
+
+comando de inicialização correto;
+
+.dockerignore deve excluir pelo menos node_modules, .env, .git e arquivos desnecessários para a imagem.
+
+Não faça:
+
+docker-compose;
+
+Terraform;
+
+AWS;
+
+alterações na API;
+
+alterações nos arquivos .kiro/specs/;
+
+commit;
+
+push.
+
+Ao terminar:
+
+mostre o conteúdo completo do Dockerfile;
+
+mostre o conteúdo completo do .dockerignore;
+
+valide a sintaxe/configuração possível sem executar Docker;
+
+pare e aguarde revisão.
+
+
+
+Implemente apenas a Fase 5 do spec technova-reservas-api: crie o docker-compose.yml na raiz conforme o design, com API + PostgreSQL, rede bridge customizada, volume nomeado postgres-data, healthcheck do PostgreSQL e depends_on aguardando o healthcheck. Use variáveis do .env. Não altere outros arquivos, não faça commit e não execute Terraform.
+
+
+
+Implemente apenas a Fase 6 do spec technova-reservas-api: crie a base do Terraform na pasta infra, incluindo providers.tf, variables.tf, outputs.tf, main.tf e a estrutura necessária do backend conforme o design. Não crie recursos fora do spec, não execute terraform apply/destroy, não faça commit e não altere arquivos da API/Compose.
+
+
+
+Implemente somente a Fase 7 da spec technova-reservas-api: módulo Terraform infra/modules/vpc/.
+
+Crie os arquivos necessários para uma VPC funcional conforme a spec:
+
+VPC 10.0.0.0/16
+
+1 subnet pública em us-east-1a
+
+2 subnets privadas em us-east-1a e us-east-1b
+
+Internet Gateway
+
+route table pública associada à subnet pública
+
+NAT Gateway para saída das subnets privadas
+
+route table privada associada às duas subnets privadas
+
+tags básicas nos recursos.
+
+Crie também os outputs necessários para que o módulo exponha:
+
+vpc_id
+
+public_subnet_id
+
+private_subnet_ids
+
+public_subnet_ids se necessário pela composição futura.
+
+Não altere outros módulos ou fases.
+
+Não execute terraform apply ou terraform destroy.
+
+Não faça commit nem push.
+
+Ao terminar, mostre apenas os arquivos criados/alterados e o conteúdo final deles.
+
+
+
+Implemente somente a Fase 8 da spec technova-reservas-api: módulos Terraform infra/modules/security-group/, infra/modules/ec2/ e infra/modules/rds/.
+
+Requisitos obrigatórios:
+
+security-group
+Criar SG da EC2 permitindo TCP 22 e 3000 de entrada.
+
+Criar SG do RDS permitindo TCP 5432 somente a partir do SG da EC2.
+
+Saída necessária permitida.
+
+Outputs: IDs dos SGs.
+
+ec2
+Instância t2.micro.
+
+Usar AMI recebida por variável.
+
+Subnet pública recebida do módulo VPC.
+
+Associar LabInstanceProfile pré-existente.
+
+Não criar IAM users, roles ou profiles.
+
+Security Group da EC2 recebido como input.
+
+Expor output ec2_public_ip.
+
+Configuração básica para rodar a API posteriormente.
+
+rds
+PostgreSQL db.t3.micro.
+
+publicly_accessible = false.
+
+multi_az = false (Single-AZ).
+
+storage_encrypted = true.
+
+DB subnet group usando private_subnet_a_id e private_subnet_b_id.
+
+Security Group do RDS recebido como input.
+
+Usar variáveis para DB name, username e password.
+
+Outputs: rds_endpoint.
+
+Não criar recursos IAM.
+
+Não criar NAT Gateway.
+
+Não criar recursos fora desses três módulos.
+
+Crie somente os arquivos necessários dentro desses três diretórios.
+
+Não altere main.tf da raiz nem outros módulos.
+
+Não execute terraform apply ou terraform destroy.
+
+Não faça commit nem push.
+
+Ao terminar, mostre os arquivos criados e o conteúdo final de cada arquivo.
+
+
+
+Implemente somente a Fase 9 da spec technova-reservas-api: composição dos módulos Terraform no 
+main.tf
+.
+
+Conecte os módulos existentes nesta ordem:
+
+vpc
+Usar as variáveis já existentes no root:
+
+vpc_cidr, public_subnet_cidr, private_subnet_a_cidr, private_subnet_b_cidr, az_public, az_private_a, az_private_b.
+
+security-group
+vpc_id = module.vpc.vpc_id.
+ec2
+ami_id = var.ami_id
+
+instance_type = var.instance_type
+
+subnet_id = module.vpc.public_subnet_id
+
+security_group_id = module.security_group.sg_ec2_id
+
+rds
+db_name = var.db_name
+
+db_username = var.db_username
+
+db_password = var.db_password
+
+instance_class = var.db_instance_class
+
+subnet_ids = [module.vpc.private_subnet_a_id, module.vpc.private_subnet_b_id]
+
+security_group_id = module.security_group.sg_rds_id
+
+Não altere os módulos existentes.
+
+Não execute terraform apply ou terraform destroy.
+
+Não faça commit nem push.
+
+Ao terminar, mostre somente o conteúdo final de 
+main.tf
+.
+
+
+Revise a configuração atual da EC2 em infra/modules/ec2 e o módulo RDS.
+Objetivo: definir a forma mais simples e segura de executar a API TechNova na EC2 e conectá-la ao RDS após o terraform apply.
+Não altere nenhum arquivo, não execute terraform apply/destroy e não faça commit.
+Verifique especificamente:
+
+Se a EC2 atual pode ser acessada após a criação.
+
+Se é necessário key_name, user_data ou outra forma de acesso.
+
+Se podemos configurar Docker/API manualmente depois do apply.
+
+Como passar DB_HOST, DB_PORT, DB_NAME, DB_USER e DB_PASS sem colocar a senha no código Terraform ou no Git.
+
+Se alguma alteração no módulo EC2 é realmente necessária para cumprir a prova.
+Retorne apenas a recomendação e os arquivos que precisariam ser alterados, se houver.
+
+
+
+
+Faça somente estas alterações no projeto, sem executar terraform apply/destroy e sem fazer commit.
+
+Em infra/modules/ec2/variables.tf, adicione:
+variable "key_name" {
+type = string
+description = "Nome do par de chaves EC2 para acesso SSH"
+default = ""
+}
+
+Em infra/modules/ec2/main.tf, dentro de aws_instance.this, adicione:
+key_name = var.key_name != "" ? var.key_name : null
+
+Em infra/variables.tf, adicione:
+variable "key_name" {
+type = string
+description = "Nome do par de chaves EC2"
+default = "vockey"
+}
+
+Em infra/main.tf, dentro do módulo "ec2", adicione:
+key_name = var.key_name
+
+No .gitignore, adicione:
+
+*.tfvars
+Depois execute apenas:
+terraform fmt -recursive infra
+terraform validate
+Não altere mais nenhum arquivo. Não faça commit.
