@@ -18,3 +18,7 @@ credentials
 # Sistema operacional
 .DS_Store
 Thumbs.db
+
+# Plano Terraform gerado localmente
+*.tfplan
+tfplan
