@@ -18,3 +18,9 @@ variable "security_group_id" {
   type        = string
   description = "ID do Security Group a ser associado a EC2"
 }
+
+variable "key_name" {
+  type        = string
+  description = "Nome do par de chaves EC2 para acesso SSH"
+  default     = ""
+}

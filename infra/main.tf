@@ -26,6 +26,7 @@ module "ec2" {
   instance_type     = var.instance_type
   subnet_id         = module.vpc.public_subnet_id
   security_group_id = module.security_group.sg_ec2_id
+  key_name          = var.key_name
 }
 
 # ── Módulo RDS ────────────────────────────────────────────────────────────────

@@ -22,3 +22,8 @@ Thumbs.db
 # Plano Terraform gerado localmente
 *.tfplan
 tfplan
+
+# Variáveis Terraform com valores sensíveis (nunca versionar)
+*.tfvars
+*.tfvars.json
+

@@ -77,3 +77,10 @@ variable "db_instance_class" {
   description = "Tipo da instância RDS"
   default     = "db.t3.micro"
 }
+
+# ── Acesso SSH ────────────────────────────────────────────────────────────────
+variable "key_name" {
+  type        = string
+  description = "Nome do par de chaves EC2"
+  default     = "vockey"
+}
