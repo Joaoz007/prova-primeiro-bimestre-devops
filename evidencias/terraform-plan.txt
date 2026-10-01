@@ -28,7 +28,7 @@ Terraform will perform the following actions:
       + instance_type                        = "t2.micro"
       + ipv6_address_count                   = (known after apply)
       + ipv6_addresses                       = (known after apply)
-      + key_name                             = (known after apply)
+      + key_name                             = "vockey"
       + monitoring                           = (known after apply)
       + outpost_arn                          = (known after apply)
       + password_data                        = (known after apply)
@@ -453,5 +453,6 @@ Terraform will perform the following actions:
 Plan: 15 to add, 0 to change, 0 to destroy.
 
 Changes to Outputs:
+  + api_url       = (known after apply)
   + ec2_public_ip = (known after apply)
   + rds_endpoint  = (known after apply)
